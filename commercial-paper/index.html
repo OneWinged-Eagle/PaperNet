@@ -7,16 +7,54 @@
 
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<style>
+		section {
+			height: 100vh;
+		}
+	</style>
 </head>
 
 <body>
-	<div class="container">
-		<form action="/issue" method="post">
-			<input type="number" name="paperNumber" min="1" value="1"></input>
+	<section class="bg-secondary text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="card bg-primary">
+						<div class="card-body">
+							<h2>MagnetoCorp</h2>
 
-			<button type="submit" class="btn btn-primary">Issue paper</button>
-		</form>
-	</div>
+							<form action="/issue" method="post">
+								<input type="number" name="paperNumber" min="1" value="1"></input>
+
+								<button type="submit" class="btn btn-outline-dark btn-sm">Issue paper</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="card bg-info">
+						<div class="card-body">
+							<h2>Digibank</h2>
+
+							<form action="/buy" method="post">
+								<input type="number" name="paperNumber" min="1" value="1"></input>
+
+								<button type="submit" class="btn btn-outline-dark btn-sm">Buy paper</button>
+							</form>
+
+							<form action="/redeem" method="post">
+								<input type="number" name="paperNumber" min="1" value="1"></input>
+
+								<button type="submit" class="btn btn-outline-dark btn-sm">Redeem paper</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
 
 </html>
