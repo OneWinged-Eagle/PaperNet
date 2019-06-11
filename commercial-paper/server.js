@@ -5,8 +5,11 @@ const issue = require("./organization/magnetocorp/application/issue")
 const buy = require("./organization/digibank/application/buy")
 const redeem = require("./organization/digibank/application/redeem")
 
-const app = express()
 const port = 3000
+
+const app = express()
+app.use(express.json())
+app.use(express.urlencoded())
 
 app.get("/", (_req, res) => {
 	res.sendFile(path.resolve(__dirname, './index.html'))
@@ -23,7 +26,7 @@ app.post("/issue", (req, res) => {
 	})
 })
 
-app.post("/buy", (_req, res) => {
+app.post("/buy", (req, res) => {
 	const paperNumber = req.body.paperNumber
 	console.info(paperNumber)
 
@@ -34,7 +37,7 @@ app.post("/buy", (_req, res) => {
 	})
 })
 
-app.post("/redeem", (_req, res) => {
+app.post("/redeem", (req, res) => {
 	const paperNumber = req.body.paperNumber
 	console.info(paperNumber)
 
