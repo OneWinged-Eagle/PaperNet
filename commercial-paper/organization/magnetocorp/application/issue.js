@@ -39,7 +39,7 @@ async function main() {
 		const userName = 'User1@org1.example.com';
 
 		// Load connection profile; will be used to locate a gateway
-		let connectionProfile = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../gateway/networkConnection.yaml', 'utf8')));
+		let connectionProfile = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../gateway/networkConnection.yaml'), 'utf8'));
 
 		// Set connection options; identity and wallet
 		let connectionOptions = {
