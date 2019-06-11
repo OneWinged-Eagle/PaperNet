@@ -1,4 +1,6 @@
 const express = require("express")
+const path = require("path");
+
 const issue = require("./organization/magnetocorp/application/issue")
 const buy = require("./organization/digibank/application/buy")
 const redeem = require("./organization/digibank/application/redeem")
@@ -6,9 +8,14 @@ const redeem = require("./organization/digibank/application/redeem")
 const app = express()
 const port = 3000
 
-app.get("/", (_req, res) => res.status(200).send("Hello World!"))
+app.get("/", (_req, res) => {
+	res.sendFile(path.resolve(__dirname, './index.html'))
+})
 
-app.get("/issue", (_req, res) => {
+app.post("/issue", (req, res) => {
+	const paperNumber = req.body.paperNumber
+	console.info(paperNumber)
+
 	issue().then(() => {
 		res.send("Issue program complete.")
 	}).catch((err) => {
@@ -16,7 +23,10 @@ app.get("/issue", (_req, res) => {
 	})
 })
 
-app.get("/buy", (_req, res) => {
+app.post("/buy", (_req, res) => {
+	const paperNumber = req.body.paperNumber
+	console.info(paperNumber)
+
 	buy().then(() => {
 		res.send("Buy program complete.")
 	}).catch((err) => {
@@ -24,7 +34,10 @@ app.get("/buy", (_req, res) => {
 	})
 })
 
-app.get("/redeem", (_req, res) => {
+app.post("/redeem", (_req, res) => {
+	const paperNumber = req.body.paperNumber
+	console.info(paperNumber)
+
 	redeem().then(() => {
 		res.send("Redeem program complete.")
 	}).catch((err) => {
