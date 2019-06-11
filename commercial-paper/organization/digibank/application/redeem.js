@@ -79,6 +79,7 @@ async function main() {
 
 		console.log(`Error processing transaction. ${error}`);
 		console.log(error.stack);
+		throw (error)
 
 	} finally {
 
