@@ -10,7 +10,7 @@ app.get("/redeem", (_req, res) => {
 	redeem().then(() => {
 		res.send("Redeem program complete.")
 	}).catch((err) => {
-		res.send("Redeem program exception: ${err}")
+		res.send(`Redeem program exception: ${err}`)
 	})
 })
 
