@@ -19,10 +19,10 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require("path");
 const { FileSystemWallet, Gateway } = require('fabric-network');
-const CommercialPaper = require('../contract/lib/paper.js');
+const CommercialPaper = require(path.resolve(__dirname, '../contract/lib/paper.js'));
 
 // A wallet stores a collection of identities for use
-const wallet = new FileSystemWallet('../identity/user/balaji/wallet');
+const wallet = new FileSystemWallet(path.resolve(__dirname, '../identity/user/balaji/wallet'));
 
 // Main program function
 async function main() {
