@@ -25,7 +25,7 @@ const CommercialPaper = require(path.resolve(__dirname, '../contract/lib/paper.j
 const wallet = new FileSystemWallet(path.resolve(__dirname, '../identity/user/balaji/wallet'));
 
 // Main program function
-async function main() {
+async function main(paperNumber) {
 
 	// A gateway defines the peers used to access Fabric networks
 	const gateway = new Gateway();
@@ -66,7 +66,7 @@ async function main() {
 		// buy commercial paper
 		console.log('Submit commercial paper buy transaction.');
 
-		const buyResponse = await contract.submitTransaction('buy', 'MagnetoCorp', '00001', 'MagnetoCorp', 'DigiBank', '4900000', '2020-05-31');
+		const buyResponse = await contract.submitTransaction('buy', 'MagnetoCorp', paperNumber, 'MagnetoCorp', 'DigiBank', '4900000', '2020-05-31');
 
 		// process response
 		console.log('Process buy transaction response.');

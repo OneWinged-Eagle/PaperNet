@@ -16,10 +16,7 @@ app.get("/", (_req, res) => {
 })
 
 app.post("/issue", (req, res) => {
-	const paperNumber = req.body.paperNumber
-	console.info(paperNumber)
-
-	issue().then(() => {
+	issue(req.body.paperNumber).then(() => {
 		res.send("Issue program complete.")
 	}).catch((err) => {
 		res.send(`Issue program exception: ${err}`)
@@ -27,10 +24,7 @@ app.post("/issue", (req, res) => {
 })
 
 app.post("/buy", (req, res) => {
-	const paperNumber = req.body.paperNumber
-	console.info(paperNumber)
-
-	buy().then(() => {
+	buy(req.body.paperNumber).then(() => {
 		res.send("Buy program complete.")
 	}).catch((err) => {
 		res.send(`Buy program exception: ${err}`)
@@ -38,10 +32,7 @@ app.post("/buy", (req, res) => {
 })
 
 app.post("/redeem", (req, res) => {
-	const paperNumber = req.body.paperNumber
-	console.info(paperNumber)
-
-	redeem().then(() => {
+	redeem(req.body.paperNumber).then(() => {
 		res.send("Redeem program complete.")
 	}).catch((err) => {
 		res.send(`Redeem program exception: ${err}`)

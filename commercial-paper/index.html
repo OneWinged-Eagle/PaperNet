@@ -5,24 +5,24 @@
 	<meta charset="UTF-8">
 	<title>PaperNet</title>
 
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	<style>
-		section {
-			height: 100vh;
+		html,
+		body {
+			height: 100%;
 		}
 	</style>
 </head>
 
 <body>
-	<section class="bg-secondary text-center">
-		<div class="container">
-			<div class="row">
+	<section class="bg-secondary h-100">
+		<div class="container h-100">
+			<div class="row align-items-center h-100">
 				<div class="col">
-					<div class="card bg-primary">
+					<div class="card bg-primary align-items-center text-center">
 						<div class="card-body">
-							<h2>MagnetoCorp</h2>
+							<h2 class="card-title">MagnetoCorp</h2>
 
 							<form action="/issue" method="post">
 								<input type="number" name="paperNumber" min="1" value="1"></input>
@@ -34,9 +34,9 @@
 				</div>
 
 				<div class="col">
-					<div class="card bg-info">
+					<div class="card bg-info align-items-center text-center">
 						<div class="card-body">
-							<h2>Digibank</h2>
+							<h2 class="card-title">Digibank</h2>
 
 							<form action="/buy" method="post">
 								<input type="number" name="paperNumber" min="1" value="1"></input>
