@@ -8,7 +8,7 @@ version: '2'
 networks:
   basic:
     external:
-      name: my-network
+      name: my-network_my-network
 
 services:
   cliMagnetoCorp:

@@ -6,7 +6,7 @@
 # More information at https://github.com/gliderlabs/logspout/tree/master/httpstream
 
 if [ -z "$1" ]; then
-   DOCKER_NETWORK=my-network
+   DOCKER_NETWORK=my-network_my-network
 else
    DOCKER_NETWORK="$1"
 fi
