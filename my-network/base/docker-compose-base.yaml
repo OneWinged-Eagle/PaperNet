@@ -41,9 +41,9 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peer0.digibank.my-network.com
-      - CORE_PEER_ADDRESS=peer0.digibank.my-network.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.digibank.my-network.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.digibank.my-network.com:7051
+      - CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.digibank.my-network.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.digibank.my-network.com:8051
       - CORE_PEER_LOCALMSPID=digibankMSP
     volumes:
         - /var/run/:/host/var/run/
