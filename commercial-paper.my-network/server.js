@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const express = require("express")
 const path = require("path");
 
@@ -39,4 +41,4 @@ app.post("/redeem", (req, res) => {
 	})
 })
 
-app.listen(port, () => console.info(`Example app listening on port ${port}!`))
+app.listen(port, () => console.info(`Server listening on port ${port}!`))

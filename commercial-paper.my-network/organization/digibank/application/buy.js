@@ -22,8 +22,7 @@ const { FileSystemWallet, Gateway } = require('fabric-network');
 const CommercialPaper = require(path.resolve(__dirname, '../contract/lib/paper.js'));
 
 // A wallet stores a collection of identities for use
-//const wallet = new FileSystemWallet('../user/isabella/wallet');
-const wallet = new FileSystemWallet(path.resolve(__dirname, '../identity/user/isabella/wallet'));
+const wallet = new FileSystemWallet(path.resolve(__dirname, '../identity/user/balaji/wallet'));
 
 // Main program function
 async function main(paperNumber) {
@@ -36,7 +35,7 @@ async function main(paperNumber) {
 
 		// Specify userName for network access
 		// const userName = 'isabella.issuer@magnetocorp.com';
-		const userName = 'User1@org1.example.com';
+		const userName = 'User1@digibank.my-network.com';
 
 		// Load connection profile; will be used to locate a gateway
 		let connectionProfile = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../gateway/networkConnection.yaml'), 'utf8'));
@@ -46,6 +45,7 @@ async function main(paperNumber) {
 			identity: userName,
 			wallet: wallet,
 			discovery: { enabled: false, asLocalhost: true }
+
 		};
 
 		// Connect to gateway using application specified parameters
@@ -63,17 +63,17 @@ async function main(paperNumber) {
 
 		const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
-		// issue commercial paper
-		console.log('Submit commercial paper issue transaction.');
+		// buy commercial paper
+		console.log('Submit commercial paper buy transaction.');
 
-		const issueResponse = await contract.submitTransaction('issue', 'MagnetoCorp', paperNumber, '2020-05-31', '2020-11-30', '5000000');
+		const buyResponse = await contract.submitTransaction('buy', 'MagnetoCorp', paperNumber, 'MagnetoCorp', 'DigiBank', '4900000', '2020-05-31');
 
 		// process response
-		console.log('Process issue transaction response.');
+		console.log('Process buy transaction response.');
 
-		let paper = CommercialPaper.fromBuffer(issueResponse);
+		let paper = CommercialPaper.fromBuffer(buyResponse);
 
-		console.log(`${paper.issuer} commercial paper : ${paper.paperNumber} successfully issued for value ${paper.faceValue}`);
+		console.log(`${paper.issuer} commercial paper : ${paper.paperNumber} successfully purchased by ${paper.owner}`);
 		console.log('Transaction complete.');
 
 	} catch (error) {
@@ -95,11 +95,11 @@ module.exports = main
 
 /*main().then(() => {
 
-	console.log('Issue program complete.');
+	console.log('Buy program complete.');
 
 }).catch((e) => {
 
-	console.log('Issue program exception.');
+	console.log('Buy program exception.');
 	console.log(e);
 	console.log(e.stack);
 	process.exit(-1);

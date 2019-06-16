@@ -35,7 +35,7 @@ async function main(paperNumber) {
 
 		// Specify userName for network access
 		// const userName = 'isabella.issuer@magnetocorp.com';
-		const userName = 'User1@digibank.my-network.com';
+		const userName = 'Admin@org1.example.com';
 
 		// Load connection profile; will be used to locate a gateway
 		let connectionProfile = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../gateway/networkConnection.yaml'), 'utf8'));

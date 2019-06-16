@@ -65,11 +65,11 @@ channels:
     # operational decisions to share loads from applications among the orderers.  The values must
     # be "names" of orgs defined under "organizations/peers"
     orderers:
-      - orderer.my-network.com
+      - orderer.magnetocorp.com
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.magnetocorp.my-network.com:
+      peer1.magnetocorp.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -89,9 +89,9 @@ channels:
         # Default: true
         eventSource: true
 
-      peer0.digibank.my-network.com:
+      peer2.digibank.com:
         endorsingPeer: true
-        chaincodeQuery: true
+        chaincodeQuery: false
         ledgerQuery: true
         eventSource: true
 
@@ -107,11 +107,19 @@ channels:
 # list of participating organizations in this network
 #
 organizations:
-  MagnetoCorp:
-    mspid: MagnetoCorpMSP
+  Org1:
+    mspid: magnetocorpMSP
 
     peers:
-      - peer0.magnetocorp.my-network.com
+      - peer1.magnetocorp.com
+
+    # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
+    # network. Typically certificates provisioning is done in a separate process outside of the
+    # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
+    # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
+    # Fabric-CA servers.
+    certificateAuthorities:
+      - ca-magnetocorp
 
     # [Optional]. If the application is going to make requests that are reserved to organization
     # administrators, including creating/updating channels, installing/instantiating chaincodes, it
@@ -130,10 +138,12 @@ organizations:
   # peers with a public URL to send transaction proposals. The file will not contain private
   # information reserved for members of the organization, such as admin key and certificate,
   # fabric-ca registrar enroll ID and secret, etc.
-  DigiBank:
-    mspid: DigiBankMSP
+  Org2:
+    mspid: digibankMSP
     peers:
-      - peer0.digibank.my-network.com
+      - peer1.digibank.com
+    certificateAuthorities:
+      - ca-digibank
     adminPrivateKey:
       path: commercial-paper/organization/digibank/users/Admin@digibank.com/keystore/5a983ddcbefe52a7f9b8ee5b85a590c3e3a43c4ccd70c7795bec504e7f74848d_sk
     signedCert:
@@ -145,33 +155,71 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-  orderer.my-network.com:
+  orderer.magnetocorp.com:
     url: grpcs://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-      ssl-target-name-override: orderer.my-network.com
+      ssl-target-name-override: orderer.example.com
+
+    tlsCACerts:
+      path: comercial-paper/organization/magnetocorp/orderer/orderer.magnetocorp.com/tlscacerts/example.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.magnetocorp.my-network.com:
+  peer1.magnetocorp.com:
     # this URL is used to send endorsement and query requests
     url: grpcs://localhost:7051
 
     grpcOptions:
-      ssl-target-name-override: peer0.magnetocorp.my-network.com
+      ssl-target-name-override: peer1.magnetocorp.com
       request-timeout: 120
 
     tlsCACerts:
       path: certificates/magnetocorp/magnetocorp.com-cert.pem
 
-  peer0.digibank.my-network.com:
+  peer1.digibank.com:
     url: grpcs://localhost:8051
     grpcOptions:
-      ssl-target-name-override: peer0.digibank.my-network.com
+      ssl-target-name-override: peer1.digibank.com
     tlsCACerts:
       path: certificates/digibank/digibank.com-cert.pem
+
+#
+# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
+# certificate management to be done via REST APIs. Application may choose to use a standard
+# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
+#
+certificateAuthorities:
+  ca-org1:
+    url: https://localhost:7054
+    # the properties specified under this object are passed to the 'http' client verbatim when
+    # making the request to the Fabric-CA server
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: commercial-paper/organization/magnetocorp/ca/magnetocorp.com-cert.pem
+
+    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
+    # needed to enroll and invoke new users.
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca-magnetocorp
+
+  ca-org2:
+    url: https://localhost:8054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: commercial-paper/organization/digibank/ca/digibank.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca-digibank

@@ -4,7 +4,7 @@
 # blockchain network that are necessary for the applications to interact with it. These are all
 # knowledge that must be acquired from out-of-band sources. This file provides such a source.
 #
-name: "basic-network"
+name: "my-network"
 
 #
 # Any properties with an "x-" prefix will be treated as application-specific, exactly like how naming
@@ -33,17 +33,17 @@ version: "1.0"
 #
 channels:
   # name of the channel
-  mychannel:
+  MyChannel:
     # Required. list of orderers designated by the application to use for transactions on this
     # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
     # operational decisions to share loads from applications among the orderers.  The values must
     # be "names" of orgs defined under "organizations/peers"
     orderers:
-      - orderer.example.com
+      - orderer.my-network.com
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.org1.example.com:
+      peer0.digibank.my-network.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -63,23 +63,27 @@ channels:
         # Default: true
         eventSource: true
 
+      peer0.magnetocorp.my-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
 #
 # list of participating organizations in this network
 #
 organizations:
-  Org1:
-    mspid: Org1MSP
+  DigiBank:
+    mspid: DigiBankMSP
 
     peers:
-      - peer0.org1.example.com
+      - peer0.digibank.my-network.com
 
-    # [Optional]. Certificate Authorities issue certificates for identification purposes in a Fabric based
-    # network. Typically certificates provisioning is done in a separate process outside of the
-    # runtime network. Fabric-CA is a special certificate authority that provides a REST APIs for
-    # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
-    # Fabric-CA servers.
-    certificateAuthorities:
-      - ca-org1
+  MagnetoCorp:
+    mspid: MagnetoCorpMSP
+
+    peers:
+      - peer0.magnetocorp.my-network.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -87,43 +91,30 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-  orderer.example.com:
+  orderer.my-network.com:
     url: grpc://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-      ssl-target-name-override: orderer.example.com
+      ssl-target-name-override: orderer.my-network.com
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.org1.example.com:
+  peer0.digibank.my-network.com:
     # this URL is used to send endorsement and query requests
-    url: grpc://localhost:7051
+    url: grpcs://localhost:8051
 
     grpcOptions:
-      ssl-target-name-override: peer0.org1.example.com
+      ssl-target-name-override: peer0.digibank.my-network.com
       request-timeout: 120001
 
-# Fabric-CA is a special kind of Certificate Authority provided by Hyperledger Fabric which allows
-# certificate management to be done via REST APIs. Application may choose to use a standard
-# Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
-#
-certificateAuthorities:
-  ca-org1:
-    url: http://localhost:7054
-    # the properties specified under this object are passed to the 'http' client verbatim when
-    # making the request to the Fabric-CA server
-    httpOptions:
-      verify: false
+  peer0.magnetocorp.my-network.com:
+    url: grpcs://localhost:7051
 
-    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
-    # needed to enroll and invoke new users.
-    registrar:
-      - enrollId: admin
-        enrollSecret: adminpw
-    # [Optional] The optional name of the CA.
-    caName: ca-org1
+    grpcOptions:
+      ssl-target-name-override: peer0.magnetocorp.my-network.com
+      request-timeout: 120001
