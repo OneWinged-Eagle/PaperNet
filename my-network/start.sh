@@ -31,13 +31,13 @@ docker exec -e "CORE_PEER_ADDRESS=peer0.magnetocorp.my-network.com:7051" \
 cli peer channel join -b mychannel.block
 
 # Create the channel
-docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:7051" \
+docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051" \
 -e "CORE_PEER_LOCALMSPID=DigiBankMSP" \
 -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/users/Admin@digibank.my-network.com/msp" \
 -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/peers/peer0.digibank.my-network.com/tls/ca.crt" \
 cli peer channel create -o orderer.my-network.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/my-network.com/orderers/orderer.my-network.com/msp/tlscacerts/tlsca.my-network.com-cert.pem
 # Join peer0.digibank.my-network.com to the channel.
-docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:7051" \
+docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051" \
 -e "CORE_PEER_LOCALMSPID=DigiBankMSP" \
 -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/users/Admin@digibank.my-network.com/msp" \
 -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/peers/peer0.digibank.my-network.com/tls/ca.crt" \
