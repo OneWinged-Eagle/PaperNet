@@ -1,22 +1,22 @@
 OrdererOrgs:
-	- Name: Orderer
-		Domain: my-network.com
-		Specs:
-			- Hostname: orderer
+  - Name: Orderer
+    Domain: my-network.com
+    Specs:
+      - Hostname: orderer
 
 PeerOrgs:
-	- Name: MagnetoCorp
-		Domain: magnetocorp.my-network.com
-		EnableNodeOUs: true
-		Template:
-			Count: 1
-		Users:
-			Count: 1
+  - Name: MagnetoCorp
+    Domain: magnetocorp.my-network.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
 
-	- Name: DigiBank
-		Domain: digibank.my-network.com
-		EnableNodeOUs: true
-		Template:
-			Count: 1
-		Users:
-			Count: 1
+  - Name: DigiBank
+    Domain: digibank.my-network.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+    Users:
+      Count: 1
