@@ -20,12 +20,12 @@ async function main() {
     try {
 
         // Identity to credentials to be stored in the wallet
-        const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/digibank.my-network.com/users/User1@digibank.my-network.com');
-        const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/User1@digibank.my-network.com-cert.pem')).toString();
+        const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/digibank.example.com/users/User1@digibank.example.com');
+        const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/User1@digibank.example.com-cert.pem')).toString();
         const key = fs.readFileSync(path.join(credPath, '/msp/keystore/cd96d5260ad4757551ed4a5a991e62130f8008a0bf996e4e4b84cd097a747fec_sk')).toString();
 
         // Load credentials into wallet
-        const identityLabel = 'User1@digibank.my-network.com';
+        const identityLabel = 'User1@digibank.example.com';
         const identity = X509WalletMixin.createIdentity('DigiBankMSP', cert, key);
 
         await wallet.import(identityLabel, identity);

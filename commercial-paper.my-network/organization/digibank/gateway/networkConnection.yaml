@@ -39,11 +39,11 @@ channels:
     # operational decisions to share loads from applications among the orderers.  The values must
     # be "names" of orgs defined under "organizations/peers"
     orderers:
-      - orderer.my-network.com
+      - orderer.example.com
 
     # Required. list of peers from participating orgs
     peers:
-      peer0.digibank.my-network.com:
+      peer0.digibank.example.com:
         # [Optional]. will this peer be sent transaction proposals for endorsement? The peer must
         # have the chaincode installed. The app can also use this property to decide which peers
         # to send the chaincode install request. Default: true
@@ -63,7 +63,7 @@ channels:
         # Default: true
         eventSource: true
 
-      peer0.magnetocorp.my-network.com:
+      peer0.magnetocorp.example.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -77,13 +77,13 @@ organizations:
     mspid: DigiBankMSP
 
     peers:
-      - peer0.digibank.my-network.com
+      - peer0.digibank.example.com
 
   MagnetoCorp:
     mspid: MagnetoCorpMSP
 
     peers:
-      - peer0.magnetocorp.my-network.com
+      - peer0.magnetocorp.example.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -91,30 +91,30 @@ organizations:
 # SDK is implementation specific. Consult each SDK's documentation for its handling of orderers.
 #
 orderers:
-  orderer.my-network.com:
+  orderer.example.com:
     url: grpc://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
     grpcOptions:
-      ssl-target-name-override: orderer.my-network.com
+      ssl-target-name-override: orderer.example.com
 
 #
 # List of peers to send various requests to, including endorsement, query
 # and event listener registration.
 #
 peers:
-  peer0.digibank.my-network.com:
+  peer0.digibank.example.com:
     # this URL is used to send endorsement and query requests
     url: grpcs://localhost:8051
 
     grpcOptions:
-      ssl-target-name-override: peer0.digibank.my-network.com
+      ssl-target-name-override: peer0.digibank.example.com
       request-timeout: 120001
 
-  peer0.magnetocorp.my-network.com:
+  peer0.magnetocorp.example.com:
     url: grpcs://localhost:7051
 
     grpcOptions:
-      ssl-target-name-override: peer0.magnetocorp.my-network.com
+      ssl-target-name-override: peer0.magnetocorp.example.com
       request-timeout: 120001

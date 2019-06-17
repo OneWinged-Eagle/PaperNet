@@ -8,7 +8,7 @@ version: '2'
 networks:
   basic:
     external:
-      name: my-network_my-network
+      name: net_basic
 
 services:
   cliDigiBank:
@@ -20,9 +20,9 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=info
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051
+      - CORE_PEER_ADDRESS=peer0.digibank.example.com:8051
       - CORE_PEER_LOCALMSPID=DigiBankMSP
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/users/Admin@digibank.my-network.com/msp
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.example.com/users/Admin@digibank.example.com/msp
       - CORE_CHAINCODE_KEEPALIVE=10
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
@@ -33,6 +33,6 @@ services:
     networks:
         - basic
     #depends_on:
-    #  - orderer.my-network.com
-    #  - peer0.digibank.my-network.com
+    #  - orderer.example.com
+    #  - peer0.digibank.example.com
     #  - couchdb

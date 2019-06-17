@@ -20,12 +20,12 @@ async function main() {
 	try {
 
 		// Identity to credentials to be stored in the wallet
-		const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/magnetocorp.my-network.com/users/User1@magnetocorp.my-network.com');
-		const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/User1@magnetocorp.my-network.com-cert.pem')).toString();
+		const credPath = path.join(fixtures, '/crypto-config/peerOrganizations/magnetocorp.example.com/users/User1@magnetocorp.example.com');
+		const cert = fs.readFileSync(path.join(credPath, '/msp/signcerts/User1@magnetocorp.example.com-cert.pem')).toString();
 		const key = fs.readFileSync(path.join(credPath, '/msp/keystore/c75bd6911aca808941c3557ee7c97e90f3952e379497dc55eb903f31b50abc83_sk')).toString();
 
 		// Load credentials into wallet
-		const identityLabel = 'User1@magnetocorp.my-network.com';
+		const identityLabel = 'User1@magnetocorp.example.com';
 		const identity = X509WalletMixin.createIdentity('MagnetoCorpMSP', cert, key);
 
 		await wallet.import(identityLabel, identity);
