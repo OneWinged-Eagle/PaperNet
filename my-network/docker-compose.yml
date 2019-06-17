@@ -74,6 +74,7 @@ services:
       - CORE_PEER_LOCALMSPID=MagnetoCorpMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_ADDRESS=peer0.magnetocorp.example.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
       # # the following setting starts chaincode containers on the same
       # # bridge network as the peers
       # # https://docs.docker.com/compose/networking/
@@ -113,6 +114,7 @@ services:
       - CORE_PEER_LOCALMSPID=DigiBankMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_ADDRESS=peer0.digibank.example.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
       # # the following setting starts chaincode containers on the same
       # # bridge network as the peers
       # # https://docs.docker.com/compose/networking/
