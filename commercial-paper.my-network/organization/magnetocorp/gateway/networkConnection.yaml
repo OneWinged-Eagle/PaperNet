@@ -33,7 +33,7 @@ version: "1.0"
 #
 channels:
   # name of the channel
-  MyChannel:
+  mychannel:
     # Required. list of orderers designated by the application to use for transactions on this
     # channel. This list can be a result of access control ("org1" can only access "ordererA"), or
     # operational decisions to share loads from applications among the orderers.  The values must
@@ -84,10 +84,8 @@ organizations:
 
   DigiBank:
     mspid: DigiBankMSP
-
     peers:
       - peer0.digibank.example.com
-
     certificateAuthorities:
       - ca.digibank.com
 
@@ -116,14 +114,12 @@ peers:
 
     grpcOptions:
       ssl-target-name-override: peer0.magnetocorp.example.com
-      request-timeout: 120001
+      request-timeout: 120
 
   peer0.digibank.example.com:
     url: grpc://localhost:8051
-
     grpcOptions:
       ssl-target-name-override: peer0.digibank.example.com
-      request-timeout: 120001
 
 certificateAuthorities:
   ca.magnetocorp.com:
@@ -143,12 +139,9 @@ certificateAuthorities:
 
   ca.digibank.com:
     url: http://localhost:8054
-
     httpOptions:
       verify: false
-
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
-
     caName: ca.digibank.com
