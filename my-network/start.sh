@@ -22,10 +22,13 @@ export FABRIC_START_TIMEOUT=10
 sleep ${FABRIC_START_TIMEOUT}
 
 # Create the channel
-docker exec cli peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx
+docker exec -e "CORE_PEER_ADDRESS=peer0.magnetocorp.example.com:7051" \
+-e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" \
+-e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@magnetocorp.example.com/msp" \
+cli peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx
 # Join peer0.magnetocorp.example.com to the channel.
 docker exec -e "CORE_PEER_ADDRESS=peer0.magnetocorp.example.com:7051" \
--e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP"
+-e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" \
 -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@magnetocorp.example.com/msp" \
 cli peer channel join -b mychannel.block
 # Join peer0.digibank.example.com to the channel.

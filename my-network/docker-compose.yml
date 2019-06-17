@@ -15,7 +15,7 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.magnetocorp.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.magnetocorp.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4239aa0dcd76daeeb8ba0cda701851d14504d31aad1b2ddddbac6a57365e497c_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/05dfe123b408ed4a3ff3fa289d5bb9ad1aa400d5d32c70952d95e0052ac6d9b1_sk
     ports:
       - 7054:7054
     command: sh -c 'fabric-ca-server start -b admin:adminpw'
@@ -31,7 +31,7 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.digibank.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.digibank.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4239aa0dcd76daeeb8ba0cda701851d14504d31aad1b2ddddbac6a57365e497c_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4956de73fc8cda56b383b318379151adc5d2abbab38c93f7b7c6e3c5eeaf4179_sk
     ports:
       - 8054:8054
     command: sh -c 'fabric-ca-server start -b admin:adminpw'
@@ -172,10 +172,14 @@ services:
         - /var/run/:/host/var/run/
         - ./../chaincode/:/opt/gopath/src/github.com/
         - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
-    networks:
-        - basic
+        - ./crypto-config/peerOrganizations/magnetocorp.example.com/users/Admin@magnetocorp.example.com:/etc/hyperledger/msp/users/Admin@magnetocorp.example.com
+        - ./crypto-config/peerOrganizations/digibank.example.com/users/Admin@digibank.example.com:/etc/hyperledger/msp/users/Admin@digibank.example.com
+        - ./config:/etc/hyperledger/configtx
     depends_on:
       - orderer.example.com
       - peer0.magnetocorp.example.com
       - peer0.digibank.example.com
       - couchdb
+    networks:
+      - basic
+
