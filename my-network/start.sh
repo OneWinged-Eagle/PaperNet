@@ -1,14 +1,18 @@
 #!/bin/bash
 #
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
 # Exit on first error, print all commands.
 set -ev
 
 # don't rewrite paths for Windows Git Bash users
 export MSYS_NO_PATHCONV=1
 
-docker-compose -f docker-compose.yaml down
+docker-compose -f docker-compose.yml down
 
-docker-compose -f docker-compose.yaml up -d
+docker-compose -f docker-compose.yml up -d ca.example.com orderer.example.com peer0.magnetocorp.example.com peer0.digibank.example.com couchdb
 docker ps -a
 
 # wait for Hyperledger Fabric to start
@@ -18,27 +22,9 @@ export FABRIC_START_TIMEOUT=10
 sleep ${FABRIC_START_TIMEOUT}
 
 # Create the channel
-docker exec -e "CORE_PEER_ADDRESS=peer0.magnetocorp.my-network.com:7051" \
--e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" \
--e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/magnetocorp.my-network.com/users/Admin@magnetocorp.my-network.com/msp" \
--e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/magnetocorp.my-network.com/peers/peer0.magnetocorp.my-network.com/tls/ca.crt" \
-cli peer channel create -o orderer.my-network.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/my-network.com/orderers/orderer.my-network.com/msp/tlscacerts/tlsca.my-network.com-cert.pem
-# Join peer0.magnetocorp.my-network.com to the channel.
-docker exec -e "CORE_PEER_ADDRESS=peer0.magnetocorp.my-network.com:7051" \
--e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" \
--e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/magnetocorp.my-network.com/users/Admin@magnetocorp.my-network.com/msp" \
--e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/magnetocorp.my-network.com/peers/peer0.magnetocorp.my-network.com/tls/ca.crt" \
-cli peer channel join -b mychannel.block
+docker exec -e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@magnetocorp.example.com/msp" peer0.magnetocorp.example.com peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx
+# Join peer0.magnetocorp.example.com to the channel.
+docker exec -e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@magnetocorp.example.com/msp" peer0.magnetocorp.example.com peer channel join -b mychannel.block
 
-# Create the channel
-docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051" \
--e "CORE_PEER_LOCALMSPID=DigiBankMSP" \
--e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/users/Admin@digibank.my-network.com/msp" \
--e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/peers/peer0.digibank.my-network.com/tls/ca.crt" \
-cli peer channel create -o orderer.my-network.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/my-network.com/orderers/orderer.my-network.com/msp/tlscacerts/tlsca.my-network.com-cert.pem
-# Join peer0.digibank.my-network.com to the channel.
-docker exec -e "CORE_PEER_ADDRESS=peer0.digibank.my-network.com:8051" \
--e "CORE_PEER_LOCALMSPID=DigiBankMSP" \
--e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/users/Admin@digibank.my-network.com/msp" \
--e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/digibank.my-network.com/peers/peer0.digibank.my-network.com/tls/ca.crt" \
-cli peer channel join -b mychannel.block
+docker exec -e "CORE_PEER_LOCALMSPID=DigiBankMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@digibank.example.com/msp" peer0.digibank.example.com peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx
+docker exec -e "CORE_PEER_LOCALMSPID=DigiBankMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@digibank.example.com/msp" peer0.digibank.example.com peer channel join -b mychannel.block
