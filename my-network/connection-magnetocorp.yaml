@@ -20,7 +20,7 @@ organizations:
         peers:
         - peer0.magnetocorp.example.com
         certificateAuthorities:
-        - ca.example.com
+        - ca.magnetocorp.com
 orderers:
     orderer.example.com:
         url: grpc://localhost:7050
@@ -28,6 +28,6 @@ peers:
     peer0.magnetocorp.example.com:
         url: grpc://localhost:7051
 certificateAuthorities:
-    ca.example.com:
+    ca.magnetocorp.com:
         url: http://localhost:7054
-        caName: ca.example.com
+        caName: ca.magnetocorp.com

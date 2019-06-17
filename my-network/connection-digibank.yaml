@@ -20,7 +20,7 @@ organizations:
         peers:
         - peer0.digibank.example.com
         certificateAuthorities:
-        - ca.example.com
+        - ca.digibank.com
 orderers:
     orderer.example.com:
         url: grpc://localhost:7050
@@ -28,6 +28,6 @@ peers:
     peer0.digibank.example.com:
         url: grpc://localhost:8051
 certificateAuthorities:
-    ca.example.com:
-        url: http://localhost:7054
-        caName: ca.example.com
+    ca.digibank.com:
+        url: http://localhost:8054
+        caName: ca.digibank.com

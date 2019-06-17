@@ -12,7 +12,7 @@ export MSYS_NO_PATHCONV=1
 
 docker-compose -f docker-compose.yml down
 
-docker-compose -f docker-compose.yml up -d ca.example.com orderer.example.com peer0.magnetocorp.example.com peer0.digibank.example.com couchdb
+docker-compose -f docker-compose.yml up -d ca.magnetocorp.com ca.digibank.com orderer.example.com peer0.magnetocorp.example.com peer0.digibank.example.com couchdb
 docker ps -a
 
 # wait for Hyperledger Fabric to start
@@ -26,5 +26,4 @@ docker exec -e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" -e "CORE_PEER_MSPCONFIGPATH
 # Join peer0.magnetocorp.example.com to the channel.
 docker exec -e "CORE_PEER_LOCALMSPID=MagnetoCorpMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@magnetocorp.example.com/msp" peer0.magnetocorp.example.com peer channel join -b mychannel.block
 
-docker exec -e "CORE_PEER_LOCALMSPID=DigiBankMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@digibank.example.com/msp" peer0.digibank.example.com peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/channel.tx
 docker exec -e "CORE_PEER_LOCALMSPID=DigiBankMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@digibank.example.com/msp" peer0.digibank.example.com peer channel join -b mychannel.block

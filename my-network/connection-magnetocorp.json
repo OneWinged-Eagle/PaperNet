@@ -29,7 +29,7 @@
 				"peer0.magnetocorp.example.com"
 			],
 			"certificateAuthorities": [
-				"ca.example.com"
+				"ca.magnetocorp.com"
 			]
 		}
 	},
@@ -44,9 +44,9 @@
 		}
 	},
 	"certificateAuthorities": {
-		"ca.example.com": {
+		"ca.magnetocorp.com": {
 			"url": "http://localhost:7054",
-			"caName": "ca.example.com"
+			"caName": "ca.magnetocorp.com"
 		}
 	}
 }
