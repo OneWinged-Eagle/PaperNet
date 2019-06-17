@@ -163,9 +163,6 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - FABRIC_LOGGING_SPEC=info
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.magnetocorp.example.com:7051
-      - CORE_PEER_LOCALMSPID=MagnetoCorpMSP
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/magnetocorp.example.com/users/Admin@magnetocorp.example.com/msp
       - CORE_CHAINCODE_KEEPALIVE=10
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
@@ -175,7 +172,8 @@ services:
         - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
     networks:
         - basic
-    #depends_on:
-    #  - orderer.example.com
-    #  - peer0.magnetocorp.example.com
-    #  - couchdb
+    depends_on:
+      - orderer.example.com
+      - peer0.magnetocorp.example.com
+      - peer0.digibank.example.com
+      - couchdb
