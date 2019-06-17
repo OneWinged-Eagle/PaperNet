@@ -79,11 +79,17 @@ organizations:
     peers:
       - peer0.digibank.example.com
 
+    certificateAuthorities:
+      - ca.digibank.com
+
   MagnetoCorp:
     mspid: MagnetoCorpMSP
 
     peers:
       - peer0.magnetocorp.example.com
+
+    certificateAuthorities:
+      - ca.magnetocorp.com
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -106,15 +112,44 @@ orderers:
 peers:
   peer0.digibank.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpcs://localhost:8051
+    url: grpc://localhost:8051
 
     grpcOptions:
       ssl-target-name-override: peer0.digibank.example.com
       request-timeout: 120001
 
   peer0.magnetocorp.example.com:
-    url: grpcs://localhost:7051
+    url: grpc://localhost:7051
 
     grpcOptions:
       ssl-target-name-override: peer0.magnetocorp.example.com
       request-timeout: 120001
+
+
+certificateAuthorities:
+  ca.digibank.com:
+    url: http://localhost:8054
+    # the properties specified under this object are passed to the 'http' client verbatim when
+    # making the request to the Fabric-CA server
+    httpOptions:
+      verify: false
+
+    # Fabric-CA supports dynamic user enrollment via REST APIs. A "root" user, a.k.a registrar, is
+    # needed to enroll and invoke new users.
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.digibank.com
+
+  ca.magnetocorp.com:
+    url: http://localhost:7054
+
+    httpOptions:
+      verify: false
+
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+
+    caName: ca.magnetocorp.com
